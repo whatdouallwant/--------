@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн-книгарня</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9DFFFA;
+            margin: 0;
+            padding: 0;
+            height: 200vh;
+        }
+        .header {
+            background-color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0px 4px 2px -2px gray;
+        }
+        .header img {
+            height: 40px;
+        }
+        .toggle-btn {
+            background-color: #9DFFFA;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: auto;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding: 20px;
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            display: none;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .content {
+            padding: 20px;
+            margin-top: 60px;
+        }
+        .book {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+            } else {
+                sidebar.style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <button class="toggle-btn" onclick="toggleSidebar()">Фільтри</button>
+        <img src="logo.png" alt="Логотип">
+        <h1>PickABoo</h1>
+    </div>
+    <div id="sidebar" class="sidebar">
+        <h3>Фільтри</h3>
+        <form>
+            <label><input type="radio" name="filter"> Фантастика</label><br>
+            <label><input type="radio" name="filter"> Детективи</label><br>
+            <label><input type="radio" name="filter"> Романи</label><br>
+            <label><input type="radio" name="filter"> Історичні</label><br>
+            <label><input type="radio" name="filter"> Біографії</label><br>
+            <label><input type="radio" name="filter"> Саморозвиток</label><br>
+            <label><input type="radio" name="filter"> Дитячі книги</label><br>
+            <label><input type="radio" name="filter"> Поезія</label><br>
+            <label><input type="radio" name="filter"> Фентезі</label><br>
+            <label><input type="radio" name="filter"> Наукова література</label><br>
+            <label><input type="radio" name="filter"> Психологія</label><br>
+            <label><input type="radio" name="filter"> Пригоди</label><br>
+            <label><input type="radio" name="filter"> Класика</label><br>
+            <label><input type="radio" name="filter"> Мотиваційні</label><br>
+            <label><input type="radio" name="filter"> Подорожі</label><br>
+        </form>
+    </div>
+    <div class="content">
+        <h2>Книги</h2>
+        <div class="book">Книга 1</div>
+        <div class="book">Книга 2</div>
+        <div class="book">Книга 3</div>
+    </div>
+</body>
+</html>
