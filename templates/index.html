@@ -3,98 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PickABoo</title>
+    <title>Онлайн-книгарня</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #9DFFFA;
+        * {
             margin: 0;
             padding: 0;
-            height: 200vh;
+            box-sizing: border-box;
         }
-        .header {
-            background-color: white;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #34495e;
             padding: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            background-color: #1abc9c;
+            border-radius: 5px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .filters {
+            margin-bottom: 20px;
+        }
+        .filters select {
+            padding: 10px;
+            font-size: 16px;
+        }
+        .book {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0px 4px 2px -2px gray;
-        }
-        .header img {
-            height: 40px;
-        }
-        .toggle-btn {
-            background-color: #9DFFFA;
-            border: none;
+            margin-bottom: 15px;
             padding: 10px;
-            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+        .book img {
+            width: 80px;
+            height: auto;
+            margin-right: 15px;
+        }
+        .book h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .cart {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .cart button {
+            padding: 10px;
             font-size: 16px;
-            margin-right: auto;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
-        .sidebar {
-            width: 250px;
-            background-color: white;
-            padding: 20px;
-            position: absolute;
-            top: 60px;
-            left: 10px;
-            display: none;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        .cart button:hover {
+            background-color: #16a085;
         }
-        .content {
-            padding: 20px;
-            margin-top: 60px;
-        }
-        .book {
-            background-color: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 20px;
         }
     </style>
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.getElementById('sidebar');
-            if (sidebar.style.display === 'block') {
-                sidebar.style.display = 'none';
-            } else {
-                sidebar.style.display = 'block';
-            }
-        }
-    </script>
 </head>
 <body>
-    <div class="header">
-        <button class="toggle-btn" onclick="toggleSidebar()">Фільтри</button>
-        <img src="logo.png" alt="Логотип">
-        <h1>PickABoo</h1>
+    <header>Онлайн-книгарня</header>
+    <nav>
+        <a href="{{ url_for('home') }}">Головна</a>
+        <a href="{{ url_for('cart') }}">Кошик</a>
+        <a href="{{ url_for('about') }}">Про нас</a>>
+    </nav>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="Пошук книг...">
+        </div>
+        <div class="filters">
+            <label for="genre">Жанр:</label>
+            <select id="genre">
+                <option value="all">Всі жанри</option>
+                <option value="fiction">Художня література</option>
+                <option value="nonfiction">Нон-фікшн</option>
+                <option value="fantasy">Фентезі</option>
+                <option value="sci-fi">Наукова фантастика</option>
+            </select>
+        </div>
+        <h2>Каталог книг</h2>
+        <div class="book">
+            <img src="https://via.placeholder.com/80" alt="Обкладинка книги">
+            <div>
+                <h3>Назва книги 1</h3>
+                <p>Автор: Автор 1</p>
+                <p>Ціна: 250 грн</p>
+            </div>
+            <button>Додати до кошика</button>
+        </div>
+        <div class="book">
+            <img src="https://via.placeholder.com/80" alt="Обкладинка книги">
+            <div>
+                <h3>Назва книги 2</h3>
+                <p>Автор: Автор 2</p>
+                <p>Ціна: 300 грн</p>
+            </div>
+            <button>Додати до кошика</button>
+        </div>
     </div>
-    <div id="sidebar" class="sidebar">
-        <h3>Фільтри</h3>
-        <form>
-            <label><input type="radio" name="filter"> Фантастика</label><br>
-            <label><input type="radio" name="filter"> Детективи</label><br>
-            <label><input type="radio" name="filter"> Романи</label><br>
-            <label><input type="radio" name="filter"> Історичні</label><br>
-            <label><input type="radio" name="filter"> Біографії</label><br>
-            <label><input type="radio" name="filter"> Саморозвиток</label><br>
-            <label><input type="radio" name="filter"> Дитячі книги</label><br>
-            <label><input type="radio" name="filter"> Поезія</label><br>
-            <label><input type="radio" name="filter"> Фентезі</label><br>
-            <label><input type="radio" name="filter"> Наукова література</label><br>
-            <label><input type="radio" name="filter"> Психологія</label><br>
-            <label><input type="radio" name="filter"> Пригоди</label><br>
-            <label><input type="radio" name="filter"> Класика</label><br>
-            <label><input type="radio" name="filter"> Мотиваційні</label><br>
-            <label><input type="radio" name="filter"> Подорожі</label><br>
-        </form>
-    </div>
-    <div class="content">
-        <h2>Книги</h2>
-        <div class="book">Книга 1</div>
-        <div class="book">Книга 2</div>
-        <div class="book">Книга 3</div>
-    </div>
+    <footer>
+        &copy; 2024 Онлайн-книгарня. Усі права захищено.
+    </footer>
 </body>
 </html>
