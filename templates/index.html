@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Онлайн-книгарня</title>
+    <title>PickABoo</title>
     <style>
         * {
             margin: 0;
@@ -105,7 +105,7 @@
     </style>
 </head>
 <body>
-    <header>Онлайн-книгарня</header>
+    <header>PickABook</header>
     <nav>
         <a href="{{ url_for('home') }}">Головна</a>
         <a href="{{ url_for('cart') }}">Кошик</a>
@@ -126,25 +126,21 @@
             </select>
         </div>
         <h2>Каталог книг</h2>
-        <div class="book">
-            <img src="https://via.placeholder.com/80" alt="Обкладинка книги">
-            <div>
-                <h3>Назва книги 1</h3>
-                <p>Автор: Автор 1</p>
-                <p>Ціна: 250 грн</p>
+        {% if book %}
+        {% for book in book %}
+            <div class="book">
+               <img src="https://via.placeholder.com/80" alt="Обкладинка книги">
+                <div>
+                    <h3>{{ book[1]}}h3> <!-- Назва книги -->
+                    <p>Автор: {{ book[2]}}</p>  <!-- Автор -->
+                    <p>Ціна: {{ book[4]}} грн</p>  <!-- Ціна -->
+                </div>
+                <button>Додати до кошика</button>
             </div>
-            <button>Додати до кошика</button>
-        </div>
-        <div class="book">
-            <img src="https://via.placeholder.com/80" alt="Обкладинка книги">
-            <div>
-                <h3>Назва книги 2</h3>
-                <p>Автор: Автор 2</p>
-                <p>Ціна: 300 грн</p>
-            </div>
-            <button>Додати до кошика</button>
-        </div>
-    </div>
+        {% endfor %}
+    {% else %}
+        <p>Книг немає в базі.</p>
+    {% endif %}
     <footer>
         &copy; 2024 Онлайн-книгарня. Усі права захищено.
     </footer>
