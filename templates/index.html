@@ -126,12 +126,12 @@
             </select>
         </div>
         <h2>Каталог книг</h2>
-        {% if book %}
-        {% for book in book %}
+        {% if books|length > 0 %}
+        {% for book in books%}
             <div class="book">
-               <img src="https://via.placeholder.com/80" alt="Обкладинка книги">
+               <img src= "{{ url_for('static', filename='img/' + book[6])}}">
                 <div>
-                    <h3>{{ book[1]}}h3> <!-- Назва книги -->
+                    <h3>{{ book[1]}} <!-- Назва книги -->
                     <p>Автор: {{ book[2]}}</p>  <!-- Автор -->
                     <p>Ціна: {{ book[4]}} грн</p>  <!-- Ціна -->
                 </div>

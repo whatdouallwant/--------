@@ -11,7 +11,6 @@ class dbManager():
         self.cursor.execute(''' SELECT * FROM book''')
         data = self.cursor.fetchall()
         self.conn.close()
-        print("Дані з БД:", data)
         return data
     def open_db(self):
         self.conn = sqlite3.connect(self.dbname) 

@@ -1,12 +1,12 @@
 from flask import Flask, render_template
 from db_scripts import dbManager
 app = Flask(__name__)
-db = dbManager("templates/book.db")
+db = dbManager("book.db")
 @app.route("/")
 def home():
     book = db.get_book()
     print("Отримані книги:", book)
-    return render_template("index.html", book=book)
+    return render_template("index.html", books=book)
 
 @app.route("/about")
 def about():
