@@ -58,9 +58,10 @@
         .filters {
             margin-bottom: 20px;
         }
-        .filters select {
+        .filters select, .filters input {
             padding: 10px;
             font-size: 16px;
+            width: 100%;
         }
         .book {
             display: flex;
@@ -102,47 +103,183 @@
             font-size: 14px;
             margin-top: 20px;
         }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <header>PickABook</header>
+    <header>PickABoo</header>
     <nav>
         <a href="{{ url_for('home') }}">Головна</a>
         <a href="{{ url_for('cart') }}">Кошик</a>
-        <a href="{{ url_for('about') }}">Про нас</a>>
+        <a href="{{ url_for('about') }}">Про нас</a>
     </nav>
     <div class="container">
         <div class="search-bar">
-            <input type="text" placeholder="Пошук книг...">
+            <form method="GET" action="/">
+                <input type="text" name="search" placeholder="Пошук книг..." value="{{ search_query }}">
+                <button type="submit">🔍</button>
+            </form>
         </div>
+        
         <div class="filters">
-            <label for="genre">Жанр:</label>
-            <select id="genre">
-                <option value="all">Всі жанри</option>
-                <option value="fiction">Художня література</option>
-                <option value="nonfiction">Нон-фікшн</option>
-                <option value="fantasy">Фентезі</option>
-                <option value="sci-fi">Наукова фантастика</option>
-            </select>
-        </div>
+            <form method="GET" action="/">
+                <label for="genre">Жанр:</label>
+                <select name="genre" id="genre" onchange="this.form.submit()">
+                    <option value="all" {% if genre_filter == "all" %}selected{% endif %}>Всі жанри</option>
+                    <option value="Трилер" {% if genre_filter == "Трилер" %}selected{% endif %}>Трилер</option>
+                    <option value="Фентезі" {% if genre_filter == "Фентезі" %}selected{% endif %}>Фентезі</option>
+                    <option value="Роман" {% if genre_filter == "Роман" %}selected{% endif %}>Роман</option>
+                    <option value="Антиутопія" {% if genre_filter == "Антиутопія" %}selected{% endif %}>Антиутопія</option>
+                    <option value="Детектив" {% if genre_filter == "Детектив" %}selected{% endif %}>Детектив</option>
+                    <option value="Психологія" {% if genre_filter == "Психологія" %}selected{% endif %}>Психологія</option>
+                    <option value="Фантастика" {% if genre_filter == "Фантастика" %}selected{% endif %}>Фантастика</option>
+                    <option value="Жахи" {% if genre_filter == "Жахи" %}selected{% endif %}>Жахи</option>
+                </select>
+                
+                <div class="price-filter">
+                    <label for="price">Максимальна ціна: <span id="priceValue">500</span> грн</label>
+                    <input type="range" id="price" name="price" min="0" max="1000" value="500" step="10" 
+                           oninput="document.getElementById('priceValue').textContent = this.value">
+                </div>
+                
+                <style>
+                    .price-filter {
+                        margin-bottom: 20px;
+                        padding: 15px;
+                        background: #ecf0f1;
+                        border-radius: 8px;
+                        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+                        text-align: center;
+                    }
+                    
+                    .price-filter label {
+                        font-size: 18px;
+                        font-weight: bold;
+                        color: #34495e;
+                    }
+                
+                    #price {
+                        width: 80%;
+                        margin-top: 10px;
+                        -webkit-appearance: none;
+                        appearance: none;
+                        height: 8px;
+                        border-radius: 5px;
+                        background: #34495e;
+                        outline: none;
+                        transition: 0.3s;
+                    }
+                
+                    #price:hover {
+                        background: #34495e;
+                    }
+                
+                    #price::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        width: 20px;
+                        height: 20px;
+                        background: white;
+                        border: 3px solid #34495e;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        transition: 0.3s;
+                    }
+                
+                    #price::-webkit-slider-thumb:hover {
+                        border-color: #34495e;
+                    }
+                    .add-to-cart {
+                        width: 160px; 
+                        height: 45px; 
+                        text-align: center;
+                        font-size: 16px;
+                        background-color: #1abc9c;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        transition: background-color 0.3s ease, transform 0.2s ease;
+                    }
+                    
+                    .add-to-cart:hover {
+                        background-color: #16a085;
+                        transform: scale(1.05); 
+                    }
+                </style>
+        
         <h2>Каталог книг</h2>
         {% if books|length > 0 %}
-        {% for book in books%}
-            <div class="book">
-               <img src= "{{ url_for('static', filename='img/' + book[6])}}">
-                <div>
-                    <h3>{{ book[1]}} <!-- Назва книги -->
-                    <p>Автор: {{ book[2]}}</p>  <!-- Автор -->
-                    <p>Ціна: {{ book[4]}} грн</p>  <!-- Ціна -->
-                </div>
-                <button>Додати до кошика</button>
+        {% for book in books %}
+        <div class="book" onclick="openModal('{{ book[1] }}', '{{ book[2] }}', '{{ book[3] }}', '{{ book[4] }}', '{{ book[5] }}')">
+            <img src="{{ url_for('static', filename='img/' + book[6]) }}">
+            <div>
+                <h3>{{ book[1] }}</h3>
+                <p>Автор: {{ book[2] }}</p>
+                <p>Жанр: {{ book[3] }}</p>
+                <p>Ціна: {{ book[4] }} грн</p>
             </div>
-        {% endfor %}
-    {% else %}
-        <p>Книг немає в базі.</p>
-    {% endif %}
+            <button class="add-to-cart">🤍</button>
+        </div>
+    {% endfor %}
+        {% else %}
+        <p>Книг не знайдено.</p>
+        {% endif %}
+    </div>
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p><strong>Автор:</strong> <span id="modalAuthor"></span></p>
+            <p><strong>Жанр:</strong> <span id="modalGenre"></span></p>
+            <p><strong>Ціна:</strong> <span id="modalPrice"></span> грн</p>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
     <footer>
         &copy; 2024 Онлайн-книгарня. Усі права захищено.
     </footer>
+    <script>
+        function updatePriceValue(value) {
+            document.getElementById("priceValue").textContent = value;
+        }
+        function openModal(title, author, genre, price, description) {
+            document.getElementById("modalTitle").textContent = title;
+            document.getElementById("modalAuthor").textContent = author;
+            document.getElementById("modalGenre").textContent = genre;
+            document.getElementById("modalPrice").textContent = price;
+            document.getElementById("modalDescription").textContent = description;
+            document.getElementById("bookModal").style.display = "block";
+        }
+    
+        function closeModal() {
+            document.getElementById("bookModal").style.display = "none";
+        }
+    </script>
 </body>
 </html>
