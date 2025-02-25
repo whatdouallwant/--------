@@ -134,7 +134,6 @@
     <header>PickABoo</header>
     <nav>
         <a href="{{ url_for('home') }}">Головна</a>
-        <a href="{{ url_for('cart') }}">Кошик</a>
         <a href="{{ url_for('about') }}">Про нас</a>
     </nav>
     <div class="container">
@@ -244,7 +243,7 @@
                 <p>Жанр: {{ book[3] }}</p>
                 <p>Ціна: {{ book[4] }} грн</p>
             </div>
-            <button class="add-to-cart">🤍</button>
+            <a href="{{url_for('order', book_id = book[0])}}" class="add-to-cart">🤍</a>
         </div>
     {% endfor %}
         {% else %}

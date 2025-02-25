@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PickABoo - Кошик</title>
+    <title>PickABoo - Замовлення</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             color: #333;
         }
+
         header {
             background-color: #2c3e50;
             color: white;
@@ -23,22 +26,26 @@
             font-size: 24px;
             font-weight: bold;
         }
+
         nav {
             display: flex;
             justify-content: center;
             background-color: #34495e;
             padding: 10px;
         }
+
         nav a {
             color: white;
             text-decoration: none;
             padding: 10px 20px;
             font-weight: bold;
         }
+
         nav a:hover {
             background-color: #1abc9c;
             border-radius: 5px;
         }
+
         .book {
             display: flex;
             align-items: center;
@@ -47,29 +54,35 @@
             padding: 10px;
             border-bottom: 1px solid #ddd;
         }
+
         .book img {
             width: 80px;
             height: auto;
             margin-right: 15px;
         }
+
         .book h3 {
             margin: 0;
             font-size: 18px;
         }
+
         .cart-section {
             margin-top: 20px;
             padding: 20px;
             background: #ecf0f1;
             border-radius: 8px;
         }
+
         .cart-list {
             list-style: none;
             padding: 0;
         }
+
         .cart-list li {
             padding: 10px;
             border-bottom: 1px solid #ccc;
         }
+
         .cart button {
             padding: 10px;
             font-size: 16px;
@@ -78,38 +91,39 @@
             border: none;
             cursor: pointer;
         }
+
         .cart button:hover {
             background-color: #16a085;
         }
     </style>
 </head>
+
 <body>
     <header>PickABoo</header>
     <nav>
         <a href="{{ url_for('home') }}">Головна</a>
-        <a href="{{ url_for('cart') }}">Кошик</a>
         <a href="{{ url_for('about') }}">Про нас</a>>
     </nav>
+
     <div class="container">
-        </div>
         
         <div class="cart-section">
-            <h2>Кошик</h2>
-            <ul class="cart-list" id="cart-list">
-                <li>Кошик порожній</li>
-            </ul>
+            <h2>Оформлення замовлення</h2>
+            <form action="" method="post">
+                <input required type="text" name="user_name" placeholder="Ім'я та прізвище">
+                <div>
+                    <input required type="text" name="phone_number" placeholder="Номер телефону">
+                </div>
+                    <div>
+                        <input required type="text" name="address" placeholder="Адреса">  
+                    </div>
+                    <button type="submit">
+                        Підтвердити замовлення
+                    </button>
+            </form>
+            
         </div>
     </div>
-    <script>
-        function addToCart(title, price) {
-            const cartList = document.getElementById("cart-list");
-            if (cartList.children[0].textContent === "Кошик порожній") {
-                cartList.innerHTML = ""; 
-            }
-            const listItem = document.createElement("li");
-            listItem.textContent = title + " - " + price;
-            cartList.appendChild(listItem);
-        }
-    </script>
 </body>
+
 </html>

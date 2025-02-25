@@ -20,3 +20,9 @@ class dbManager():
         clean_data = [tuple(str(item) for item in row) for row in data]
         
         return clean_data
+    def create_oreder(self,book_id, user_name, phone_number, address):
+        self.conn = sqlite3.connect(self.dbname)
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("INSERT INTO orders(book_id, user_name, phone_number, address) VALUES(?, ?, ?, ?)", [book_id, user_name, phone_number, address])
+        self.conn.commit()
+        self.conn.close()

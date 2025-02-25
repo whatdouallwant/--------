@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from db_scripts import dbManager
 app = Flask(__name__)
 db = dbManager("book.db")
@@ -18,9 +18,12 @@ def home():
 def about():
     return render_template("about.html")
 
-@app.route("/cart")
-def cart():
-    return render_template("cart.html")
+@app.route("/<int:book_id>/order", methods=["GET", "POST"])
+def order(book_id):
+    if request.method == "POST":
+        db.create_oreder(book_id, request.form["user_name"], request.form["phone_number"], request.form["address"])
+        return redirect('/')
+    return render_template("order.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
