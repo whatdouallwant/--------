@@ -48,6 +48,8 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
         .search-bar {
+            display: flex;
+            justify-content: center;
             margin-bottom: 20px;
         }
         .search-bar input {
@@ -160,9 +162,8 @@
                 </select>
                 
                 <div class="price-filter">
-                    <label for="price">Максимальна ціна: <span id="priceValue">500</span> грн</label>
-                    <input type="range" id="price" name="price" min="0" max="1000" value="500" step="10" 
-                           oninput="document.getElementById('priceValue').textContent = this.value">
+                    <label for="price">Максимальна ціна: <span id="priceValue">{{ price_filter }}</span> грн</label>
+                    <input type="range" id="price" name="price" min="0" max="1000" value="{{ price_filter }}" step="10">
                 </div>
                 
                 <style>
@@ -279,6 +280,23 @@
         function closeModal() {
             document.getElementById("bookModal").style.display = "none";
         }
+        document.addEventListener("DOMContentLoaded", function () {
+            let priceSlider = document.getElementById("price");
+            let priceValue = document.getElementById("priceValue");
+    
+            // Оновлюємо напис при русі повзунка
+            priceSlider.oninput = function () {
+                priceValue.textContent = this.value;
+            };
+    
+            // При зміні значення – оновлюємо сторінку з новою ціною
+            priceSlider.onchange = function () {
+                let url = new URL(window.location.href);
+                url.searchParams.set('price', this.value);
+                window.location.href = url.toString();
+            };
+        });
+        
     </script>
 </body>
 </html>

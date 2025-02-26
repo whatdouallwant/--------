@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="uk">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,26 +45,6 @@
             border-radius: 5px;
         }
 
-        .book {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .book img {
-            width: 80px;
-            height: auto;
-            margin-right: 15px;
-        }
-
-        .book h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-
         .cart-section {
             margin-top: 20px;
             padding: 20px;
@@ -73,27 +52,52 @@
             border-radius: 8px;
         }
 
-        .cart-list {
-            list-style: none;
-            padding: 0;
+        .input-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
         }
 
-        .cart-list li {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
+        .styled-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #34495e;
+            border-radius: 8px;
+            background: #ecf0f1;
+            color: #2c3e50;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .cart button {
-            padding: 10px;
+        .styled-input:focus {
+            border-color: #1abc9c;
+            box-shadow: 0 0 8px rgba(26, 188, 156, 0.5);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center; 
+            margin-top: 20px;
+        }
+
+        .add-to-cart {
+            width: 250px; 
+            height: 50px; 
+            text-align: center;
             font-size: 16px;
             background-color: #1abc9c;
             color: white;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .cart button:hover {
+        .add-to-cart:hover {
             background-color: #16a085;
+            transform: scale(1.05); 
         }
     </style>
 </head>
@@ -102,28 +106,29 @@
     <header>PickABoo</header>
     <nav>
         <a href="{{ url_for('home') }}">Головна</a>
-        <a href="{{ url_for('about') }}">Про нас</a>>
+        <a href="{{ url_for('about') }}">Про нас</a>
     </nav>
 
     <div class="container">
-        
         <div class="cart-section">
             <h2>Оформлення замовлення</h2>
             <form action="" method="post">
-                <input required type="text" name="user_name" placeholder="Ім'я та прізвище">
-                <div>
-                    <input required type="text" name="phone_number" placeholder="Номер телефону">
+                <div class="input-container">
+                    <input required class="styled-input" type="text" name="user_name" placeholder="Ім'я та прізвище">
                 </div>
-                    <div>
-                        <input required type="text" name="address" placeholder="Адреса">  
-                    </div>
-                    <button type="submit">
+                <div class="input-container">
+                    <input required class="styled-input" type="text" name="phone_number" placeholder="Номер телефону">
+                </div>
+                <div class="input-container">
+                    <input required class="styled-input" type="text" name="address" placeholder="Адреса">  
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="add-to-cart">
                         Підтвердити замовлення
                     </button>
+                </div>
             </form>
-            
         </div>
     </div>
 </body>
-
 </html>

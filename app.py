@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from db_scripts import dbManager
+from db_scripts import *
 app = Flask(__name__)
 db = dbManager("book.db")
 @app.route("/")
@@ -24,6 +24,10 @@ def order(book_id):
         db.create_oreder(book_id, request.form["user_name"], request.form["phone_number"], request.form["address"])
         return redirect('/')
     return render_template("order.html")
+@app.route('/')
+def heg():
+    return get_books_by_price()
+
 
 if __name__ == "__main__":
     app.run(debug=True)
