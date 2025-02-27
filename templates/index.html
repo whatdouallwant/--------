@@ -214,9 +214,9 @@
                         border-color: #34495e;
                     }
                     .add-to-cart {
+                        display: flex;
                         width: 160px; 
                         height: 45px; 
-                        text-align: center;
                         font-size: 16px;
                         background-color: #1abc9c;
                         color: white;
@@ -225,6 +225,10 @@
                         cursor: pointer;
                         font-weight: bold;
                         transition: background-color 0.3s ease, transform 0.2s ease;
+                        align-items: center; 
+                        justify-content: center; 
+                        text-decoration: none; 
+
                     }
                     
                     .add-to-cart:hover {
@@ -244,7 +248,7 @@
                 <p>Жанр: {{ book[3] }}</p>
                 <p>Ціна: {{ book[4] }} грн</p>
             </div>
-            <a href="{{url_for('order', book_id = book[0])}}" class="add-to-cart">🤍</a>
+            <a href="{{ url_for('order', book_id=book[0]) }}" class="add-to-cart" onclick="event.stopPropagation();">Замовити 🚚</a>
         </div>
     {% endfor %}
         {% else %}
@@ -284,12 +288,10 @@
             let priceSlider = document.getElementById("price");
             let priceValue = document.getElementById("priceValue");
     
-            // Оновлюємо напис при русі повзунка
             priceSlider.oninput = function () {
                 priceValue.textContent = this.value;
             };
     
-            // При зміні значення – оновлюємо сторінку з новою ціною
             priceSlider.onchange = function () {
                 let url = new URL(window.location.href);
                 url.searchParams.set('price', this.value);
